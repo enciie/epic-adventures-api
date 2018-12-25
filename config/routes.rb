@@ -1,3 +1,13 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+    namespace :api do 
+
+        get 'user', to: 'users#show', as: 'user_show'
+        post 'signup', to: 'users#create', as: 'user_signup'
+        post 'login', to: 'users#login', as: 'user_login'
+        
+        resources :trips do
+            resources :comments, only: [:index, :create, :destroy]
+        end
+    end
 end
+
