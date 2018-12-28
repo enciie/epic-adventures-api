@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-    root to: 'welcome#home'
-
     namespace :api do 
         resources :users
         
