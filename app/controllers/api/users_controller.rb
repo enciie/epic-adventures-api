@@ -22,11 +22,7 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    if get_current_user
-      render json: get_current_user
-    else
-      render json: {error: "You must be logged in"} 
-    end
+    render json: get_current_user
   end
 
   private
@@ -36,9 +32,7 @@ class Api::UsersController < ApplicationController
         :username,
         :password,
         :password_confirmation,
-        :name,
-        :email,
-        :hometown
+        :email
       )
   end
 end
