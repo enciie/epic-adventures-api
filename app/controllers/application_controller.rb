@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
   def index
-    render json: { message: "successful", status: 200 }
+    render json: get_current_user
+    # render json: { message: "successful", status: 200 }
   end
 
   def get_current_user
