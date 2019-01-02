@@ -7,7 +7,9 @@ class Api::CommentsController < ApplicationController
 
     def create
         @trip = Trip.find_by(id: params[:id])
-        @comment = @trip.comments.build(comment_params)
+        @user = get_current_user
+        @comment = @user.comments.build(comment_params)
+        @comment.trip = @trip
         if @comment.save
             render json: @comment, status: 201
         else
