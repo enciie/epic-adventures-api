@@ -11,11 +11,11 @@ class Api::TripsController < ApplicationController
     end
 
     def create
-        trip = get_current_user.trips.build(trip_params)
-        if trip.save
-            render json: trip
+        @trip = get_current_user.trips.build(trip_params)
+        if @trip.save
+            render json: @trip
         else 
-            render json: { message: trip.errors }, status: 400
+            render json: { message: @trip.errors }, status: 400
         end
     end
 
