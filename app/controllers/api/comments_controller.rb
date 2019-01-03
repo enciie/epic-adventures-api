@@ -22,9 +22,10 @@ class Api::CommentsController < ApplicationController
     end
 
     def destroy
-        @trip = Trip.find_by(id: params[:id])
-        @comment = @trip.comments.find_by(id: params[:id])
+        @comment = Comment.find(params[:id])
         @comment.destroy
+
+        render json: @comment
     end
 
     private

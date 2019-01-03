@@ -8,7 +8,7 @@ Rails.application.routes.draw do
         post 'login', to: 'users#login', as: 'user_login'
         
         resources :trips do
-            resources :comments, only: [:index, :create, :destroy]
+            resources :comments
         end
     end
 end
