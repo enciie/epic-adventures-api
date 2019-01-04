@@ -1,8 +1,8 @@
 class Api::TripsController < ApplicationController
 
     def index
-        trips = Trip.all
-        render json: trips, status: 200
+        @trips = Trip.all
+        render json: @trips, status: 200
     end
 
     def show
@@ -11,8 +11,12 @@ class Api::TripsController < ApplicationController
     end
 
     def create
-        @trip = get_current_user.trips.build(trip_params)
+        @user = get_current_user
+        @trip = Trip.new(trip_params)
+        @trip.user_id = @user.id
         if @trip.save
+
+            @user_trip = UserTrip.create(trip_id: @trip.id, user_id: @user.id )
             render json: @trip
         else 
             render json: { message: @trip.errors }, status: 400
@@ -30,10 +34,11 @@ class Api::TripsController < ApplicationController
     
     def destroy
         @trip = Trip.find_by(id: params[:id])
-        if @trip.destroy
+        @user_trip = UserTrip.find_by(trip_id: @trip.id)
+        if @trip.destroy && @user_trip.destroy
             render status: 204
         else
-            render json: { message: "Unable to remove this comment" }, status: 400
+            render json: { message: "Unable to remove this trip" }, status: 400
         end
     end
 
