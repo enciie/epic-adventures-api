@@ -35,8 +35,11 @@ class Api::TripsController < ApplicationController
     def destroy
         @trip = Trip.find_by(id: params[:id])
         @user_trip = UserTrip.find_by(trip_id: @trip.id)
+
+        binding.pry
         if @trip.destroy && @user_trip.destroy
-            render status: 204
+            binding.pry
+            render @trip 
         else
             render json: { message: "Unable to remove this trip" }, status: 400
         end
