@@ -16,9 +16,9 @@ class Api::TripsController < ApplicationController
         @trip.user_id = @user.id
         if @trip.save
 
-            @user_trip = UserTrip.create(trip_id: @trip.id, user_id: @user.id )
+            # @user_trip = UserTrip.create(trip_id: @trip.id, user_id: @user.id )
             render json: @trip
-        else 
+        else
             render json: { message: @trip.errors }, status: 400
         end
     end
@@ -31,15 +31,14 @@ class Api::TripsController < ApplicationController
             render json: { message: @trip.errors }, status: 400
         end
     end
-    
-    def destroy
-        @trip = Trip.find_by(id: params[:id])
-        @user_trip = UserTrip.find_by(trip_id: @trip.id)
 
-        binding.pry
-        if @trip.destroy && @user_trip.destroy
-            binding.pry
-            render @trip 
+    def destroy
+        @trip = Trip.find(params[:id])
+        # @user_trip = UserTrip.find_by(trip_id: @trip.id)
+
+        # if @trip.destroy && @user_trip.destroy
+        if @trip.destroy
+            render json: @trip, status: 204
         else
             render json: { message: "Unable to remove this trip" }, status: 400
         end

@@ -1,7 +1,7 @@
 class Api::CommentsController < ApplicationController
     def index
         @trip = Trip.find_by(id: params[:trip_id])
-        @comments = @trip.comments.all 
+        @comments = @trip.comments.all
 
         render json: @comments, status: 200
     end
@@ -13,10 +13,10 @@ class Api::CommentsController < ApplicationController
         if @comment.save
             render json: @comment, status: 201
         else
-            render json: { 
-                errors: { 
-                    messages: @comment.errors.messages 
-                } 
+            render json: {
+                errors: {
+                    messages: @comment.errors.messages
+                }
             }, status: 422
         end
     end
